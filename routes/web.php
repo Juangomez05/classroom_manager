@@ -9,7 +9,6 @@ use App\Http\Controllers\HorariosController;
 use App\Http\Controllers\SalonesController;
 use App\Http\Controllers\WelcomeController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,11 +26,11 @@ Route::get('/', function () {
 
 // Rutas Login
 Route::get('/login', [LoginController::class, 'login'])->name('login.login');
-Route::get('/olvidocontrasenia', [LoginController::class, 'olvidocontrasenia'])->name('asignarhorario.asignarhorario');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+Route::get('/olvidocontrasenia', [LoginController::class, 'olvidocontrasenia'])->name('login.olvidocontrasenia');
 
 // Ruta welcome
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');
-
 
 // Rutas AsignarHorario
 Route::get('/asignarhorario', [AsignarHorarioController::class, 'asignarHorario'])->name('asignarhorario.asignarhorario');
@@ -48,6 +47,3 @@ Route::get('/docente', [DocenteController::class, 'docente'])->name('docente.doc
 
 // Rutas Salones
 Route::get('/salones', [SalonesController::class, 'salones'])->name('salones.salones');
-
-
-
