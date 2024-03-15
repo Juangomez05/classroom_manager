@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -20,16 +22,23 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
- 
-            return redirect()->intended('/');
+        $credentials['remember'] = (bool)$request->remember;
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            $message = 'Estas credenciales no coinciden con nuestros registros. Por favor, verifica tus datos e intenta de nuevo.';
+            return back()->withErrors([
+                'email' => $message,
+            ])->onlyInput('email')
+            ->with('alert', $message);
         }
- 
-        return back()->withErrors([
-            'email' => 'Estas credenciales no coinciden con nuestros registros. Por favor, verifica tus datos e intenta de nuevo.',
-        ])->onlyInput('email');
+
+        Auth::login($user, $credentials['remember']);
+
+        $request->session()->regenerate();
+
+        return redirect()->intended('/');
     }
 
     public function login(){

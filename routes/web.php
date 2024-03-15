@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HorariosController;
 use App\Http\Controllers\SalonesController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,8 @@ Route::get('/', function () {
 // Rutas Login
 Route::get('/login', [LoginController::class, 'login'])->name('login.login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
-Route::get('/olvidocontrasenia', [LoginController::class, 'olvidocontrasenia'])->name('login.olvidocontrasenia');
+Route::get('/passwordres', [LoginController::class, 'olvidocontrasenia'])->name('login.olvidocontrasenia');
+Route::post('/passwordres', [LoginController::class, 'forgotPassword'])->name('password.email');
 
 // Ruta welcome
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');

@@ -24,15 +24,16 @@
                                     <h1 class="h4 text-gray-900 mb-2">¿Olvidó su contraseña?</h1>
                                     <p class="mb-4">Para recuperar su contraseña por favor ingrese su correo electrónico</p>
                                 </div>
-                                <form class="user">
+                                <form class="user" method="POST" action="{{ route('password.email') }}">
+                                    @csrf
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
-                                            id="exampleInputEmail" aria-describedby="emailHelp"
-                                            placeholder="Correo electrónico">
+                                            id="email" name="email" aria-describedby="emailHelp"
+                                            placeholder="Correo electrónico" required>
                                     </div>
-                                    <a href="#" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Recuperar contraseña
-                                    </a>
+                                    </button>
                                 </form>
                                 <hr>
                                 <div class="text-center">
